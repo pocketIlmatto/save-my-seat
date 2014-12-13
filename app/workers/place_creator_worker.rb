@@ -1,14 +1,17 @@
-require 'uri'
-namespace :api_sources do
-  
-  desc "Foursquare"
-  task :foursquare => :environment do
-    location = Geocoder.search("1 Dr Carlton B Goodlett Place, San Francisco, CA 94102").first
+class PlaceCreatorWorker
+  include Sidekiq::Worker
+
+  def perform(latitude, longitude)
+
+  end
+
+  def create_places_foursquare(latitude, longitude, category, limit)
+
     api_r = HTTParty.get("https://api.foursquare.com/v2/venues/search?"\
       "client_id=#{ENV['FOURSQUARE_KEY']}&client_secret=#{ENV['FOURSQUARE_SECRET']}"\
-      "&v=20141211&ll=#{location.latitude},#{location.longitude}"\
-      "&limit=10"\
-      "&query=#{URI::encode('coffee')}")
+      "&v=20141211&ll=#{latitude},#{longitude}"\
+      "&limit=#{limit}"\
+      "&query=#{URI::encode(category)}")
     
     s = Source.find_by(name: "Foursquare")
 
@@ -42,28 +45,5 @@ namespace :api_sources do
       
     end
   end
-
-  desc "Test measurement mapping"
-  task :test_measurement_mapping => :environment do
-    puts "0 " + "#{transform_measurement(24, 100, 0)}"
-    puts "1 " + "#{transform_measurement(49, 100, 4)}"
-    puts "2 " + "#{transform_measurement(74, 100, 4)}"
-    puts "3 " + "#{transform_measurement(99, 100, 4)}"
-  end
-
-  def transform_measurement(measure, capacity, num_buckets)
-    if num_buckets > 0
-      bucket = capacity/num_buckets
-      for i in 1..num_buckets
-        if measure <= i*bucket
-          break
-        end
-      end
-      i-1
-    else
-      0
-    end
-  end
-
 
 end

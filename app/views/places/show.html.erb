@@ -1,6 +1,6 @@
 <p><%= @place.name %></p>
 <p><%= @place.address %></p>
-<%= render 'shared/latest_time_measurement', last_updated: @place.latest_measurement.created_at %>
+<%= render 'shared/latest_time_measurement', last_updated: @place.latest_statistic.nil? ? nil : @place.latest_statistic.created_at %>
 <hr/>
 
 <% if @place.place_statistics.size > 0 %>
