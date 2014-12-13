@@ -4,7 +4,7 @@ class PlacesController < ApplicationController
 
   def index
     
-    PlaceCreatorWorker.perform_async(@result.latitude, @result.longitude)
+    #PlaceCreatorWorker.perform_async(@result.latitude, @result.longitude)
     
     @places = Place.all.sort_by {|x| PlaceStatistic.measurements.key(x.latest_measurement)}
 
@@ -23,7 +23,7 @@ class PlacesController < ApplicationController
 
   private
   def set_place
-    @place = Place.find(params[:id])
+    @place = Place.find_by(slug: params[:id])
   end
 
   def places_param

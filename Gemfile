@@ -35,6 +35,7 @@ gem 'sinatra', require: false
 gem 'slim'
 gem 'geocoder'
 gem 'httparty'
+gem 'sluggable_pocket'
 
 group :development do
   gem 'quiet_assets'

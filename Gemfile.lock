@@ -149,6 +149,7 @@ GEM
       temple (~> 0.7.3)
       tilt (>= 1.3.3, < 2.1)
     slop (3.6.0)
+    sluggable_pocket (0.0.1)
     spring (1.2.0)
     sprockets (2.12.3)
       hike (~> 1.2)
@@ -197,6 +198,7 @@ DEPENDENCIES
   sidetiq
   sinatra
   slim
+  sluggable_pocket
   spring
   turbolinks
   uglifier (>= 1.3.0)
