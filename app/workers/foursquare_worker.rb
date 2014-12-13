@@ -1,8 +1,14 @@
 class FoursquareWorker
   include Sidekiq::Worker
 
-  def perform(latitude, longitude)
-    puts "Doing it #{latitude}, #{longitude}"
+  def perform()
+    # Places.each  do |place|
+    #   if 
+    #   api_r = FoursquareConnector::api_call_venue()
+      
+    # end     
   end
+
+  
 
 end

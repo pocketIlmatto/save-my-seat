@@ -4,9 +4,9 @@ class PlacesController < ApplicationController
 
   def index
     
-    FoursquareWorker.perform_async(@result.latitude, @result.longitude)
+    #PlaceCreatorWorker.perform_async(@result.latitude, @result.longitude)
     
-    @places = Place.all
+    @places = Place.all.sort_by {|x| PlaceStatistic.measurements.key(x.latest_measurement)}
 
     respond_to do |format|
       format.html
@@ -23,7 +23,7 @@ class PlacesController < ApplicationController
 
   private
   def set_place
-    @place = Place.find(params[:id])
+    @place = Place.find_by(slug: params[:id])
   end
 
   def places_param
@@ -32,7 +32,7 @@ class PlacesController < ApplicationController
 
   def set_location
     @result = request.location
-    @result = Geocoder.search("1 Dr Carlton B Goodlett Place, San Francisco, CA 94102").first if @result.latitude == ""
+    @result = Geocoder.search("2130 Post Street Apt 503, San Francisco, CA 94102").first if @result.latitude == ""
   end
 
 end

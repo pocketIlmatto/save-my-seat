@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141213011628) do
+ActiveRecord::Schema.define(version: 20141213214433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,12 +24,30 @@ ActiveRecord::Schema.define(version: 20141213011628) do
     t.datetime "updated_at"
   end
 
+  create_table "categories", force: true do |t|
+    t.string  "name"
+    t.integer "capacity"
+    t.boolean "hidden"
+    t.integer "parent_category_id"
+    t.string  "slug"
+  end
+
+  create_table "categories_places", id: false, force: true do |t|
+    t.integer "category_id", null: false
+    t.integer "place_id",    null: false
+  end
+
+  add_index "categories_places", ["category_id", "place_id"], name: "index_categories_places_on_category_id_and_place_id", using: :btree
+  add_index "categories_places", ["place_id", "category_id"], name: "index_categories_places_on_place_id_and_category_id", using: :btree
+
   create_table "place_statistics", force: true do |t|
     t.integer  "place_id"
     t.integer  "source_id"
-    t.integer  "measurement", default: 1
+    t.integer  "measurement",   default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "raw_data"
+    t.string   "raw_data_type"
   end
 
   create_table "places", force: true do |t|
@@ -43,6 +61,8 @@ ActiveRecord::Schema.define(version: 20141213011628) do
     t.string   "zip"
     t.string   "country"
     t.text     "address"
+    t.integer  "capacity"
+    t.string   "slug"
   end
 
   create_table "sources", force: true do |t|
