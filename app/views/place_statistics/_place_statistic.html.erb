@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="span0 well text-center">
+    <span id='stat_<%= place_statistic.id %>_measurement'><%= place_statistic.measurement.humanize %></span>
+    <br/>
+  </div>
+    
+  <div class='span8 well'>
+    <em><%= place_statistic.source.name %></em>
+    <br/>
+    <%= render 'shared/latest_time_measurement', last_updated: place_statistic.created_at %>
+  </div>
+</div>

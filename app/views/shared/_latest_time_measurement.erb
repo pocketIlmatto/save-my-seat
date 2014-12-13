@@ -1,0 +1,8 @@
+<p>
+  <span class='quiet'>last updated
+  <% unless last_updated.nil? %>
+  <%= display_datetime(last_updated) %>
+  <% else %>
+  never
+  <% end %>
+</p>

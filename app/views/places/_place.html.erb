@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="span0 well text-center">
+      <span id='place_<%= place.id %>_status'>
+      <% unless place.latest_measurement.nil? %>
+        <%= place.latest_measurement.measurement.humanize %>
+      <% else %>
+        None
+      <% end %>
+      </span> 
+      <br/>
+    </div>
+    <div class='span8 well'>
+      <h4><%= link_to place.name, place_path(place) %></h4>
+      <p><%= place.address %></p>
+      <%= render 'shared/latest_time_measurement', last_updated: place.latest_measurement.nil? ? nil : place.latest_measurement.created_at %>
+    </div>
+  </div>

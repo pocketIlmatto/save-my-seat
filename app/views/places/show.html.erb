@@ -1,0 +1,12 @@
+<p><%= @place.name %></p>
+<p><%= @place.address %></p>
+<%= render 'shared/latest_time_measurement', last_updated: @place.latest_measurement.created_at %>
+<hr/>
+
+<% if @place.place_statistics.size > 0 %>
+  <h5>History</h5>
+  <%# binding.pry %>
+  <%= render @place.place_statistics.reverse %>
+  <%# TODO render a graph over time instead %>
+<% end %>
+  
